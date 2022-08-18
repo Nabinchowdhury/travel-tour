@@ -43,7 +43,7 @@ const sevicesArray = [bikeOject, carOject, busOject,]
 
 function showServices(object) {
     const mainContainer = document.getElementById('main-container');
-
+    const stringyfiedObject = JSON.stringify(object);
     const service = document.createElement("div");
     service.innerHTML =
         `
@@ -59,7 +59,10 @@ function showServices(object) {
             <p class="card-text">${object.description}</p>
             <p class="card-text"><small class="text-muted">Fare per kilo ${object.farePerKilo}  </small></p>
             <p class="card-text"><small class="text-muted">Capacity ${object.capacity}</small></p>
-            <button class="btn btn-primary" type="submit">See Details</button>
+            <!-- Button trigger modal -->
+            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop" onclick='seeDetails(${stringyfiedObject})'>
+               See Details
+              </button>
         </div>
     </div>
 </div>
@@ -73,3 +76,30 @@ for (let i = 0; i < sevicesArray.length; i++) {
     showServices(sevicesArray[i])
 }
 
+
+
+function seeDetails(object) {
+    const stringifiedObj = JSON.stringify(object);
+    const modalBody = document.getElementById("modal-body");
+    modalBody.innerHTML = `
+    
+    <div class="card mx-auto" style="width: 18rem;">
+  <img src=${object.imageUrl} class="card-img-top" alt="...">
+  <div class="card-body">
+    <h5 class="card-title">Vehicle Mood : ${object.vehicle}</h5>
+    <p class="card-text">${object.description}</p>
+    <p class="card-text"><small class="text-muted">Fare per kilo ${object.farePerKilo}</small> <small class="text-muted">Capacity ${object.capacity}</small></p>
+    <div class="d-flex flex-column" role="search">
+     <p>Fare: <small class="text-muted" id="fare"></small > </p>
+     <p>tax: <small class="text-muted" id="tax"></small > </p>
+     <p>Total-cost: <small class="text-muted" id="total-cost"></small > </p>
+    <input class="form-control m-2" id= "distance-input"  type="number" placeholder="Koto kilo jaba?" aria-label="Search"/>
+    <input class="form-control m-2" type="number" id= "quantity-input" placeholder="koita gari lagbe?" aria-label="Search"/>
+    <button class="btn btn-outline-success" id="search-btn" aria-label="type="submit" onclick='calculateCost(${stringifiedObj})'>submit</button>
+  </div>
+  </div>
+</div>
+    
+    `;
+
+}
