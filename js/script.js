@@ -78,6 +78,8 @@ for (let i = 0; i < sevicesArray.length; i++) {
 
 
 
+
+
 function seeDetails(object) {
     const stringifiedObj = JSON.stringify(object);
     const modalBody = document.getElementById("modal-body");
@@ -95,7 +97,7 @@ function seeDetails(object) {
      <p>Total-cost: <small class="text-muted" id="total-cost"></small > </p>
     <input class="form-control m-2" id= "distance-input"  type="number" placeholder="Koto kilo jaba?" aria-label="Search"/>
     <input class="form-control m-2" type="number" id= "quantity-input" placeholder="koita gari lagbe?" aria-label="Search"/>
-    <button class="btn btn-outline-success" id="search-btn" aria-label="type="submit" onclick='calculateCost(${stringifiedObj})'>submit</button>
+    <button class="btn btn-outline-success" id="search-btn" aria-label="type="submit" onclick='calculateCost(${stringifiedObj})'>Submit</button>
   </div>
   </div>
 </div>
@@ -109,8 +111,27 @@ function calculateCost(obj) {
     const fare = document.getElementById("fare");
     const distance = document.getElementById("distance-input").value;
     const quantity = document.getElementById("quantity-input").value;
-    fare.innerText = distance * obj.farePerKilo;
-    const totalCost = document.getElementById("total-cost");
-    // console.log(typeof totalCost)
-    totalCost.innerText = fare.innerText * quantity;
+    fare.innerText = distance * obj.farePerKilo * quantity;
+    // const totalCost = document.getElementById("total-cost");
+    // // console.log(typeof totalCost)
+    // totalCost.innerText = fare.innerText * quantity;
 }
+
+document.getElementById("search-btn").addEventListener('click', function () {
+    const searchVehicle = document.getElementById("search-vehicle").value;
+
+    for (let i = 0; i < sevicesArray.length; i++) {
+
+        const showVehicle = sevicesArray[i];
+        if (searchVehicle.toLowerCase() === showVehicle.vehicle.toLowerCase()) {
+
+            document.getElementById("main-container").innerHTML = "";
+
+            showServices(showVehicle);
+            return;
+        }
+
+    }
+    alert("nothing found with your input")
+
+})
