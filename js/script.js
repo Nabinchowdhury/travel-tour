@@ -103,3 +103,14 @@ function seeDetails(object) {
     `;
 
 }
+
+function calculateCost(obj) {
+    // const stringifiedObj = JSON.stringify(object);
+    const fare = document.getElementById("fare");
+    const distance = document.getElementById("distance-input").value;
+    const quantity = document.getElementById("quantity-input").value;
+    fare.innerText = distance * obj.farePerKilo;
+    const totalCost = document.getElementById("total-cost");
+    // console.log(typeof totalCost)
+    totalCost.innerText = fare.innerText * quantity;
+}
